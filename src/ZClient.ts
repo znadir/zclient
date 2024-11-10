@@ -57,14 +57,8 @@ class ZClient {
 		const request = new HttpRequest(zclient, method, url, fullHeaders, payload);
 		console.log("This raw will be sent: " + request.raw);
 
-		const ip = await getIpFromDomain(request.hostname);
-
-		const con = {
-			host: ip,
-			port: 80,
-		};
-
-		const netClient = net.createConnection(con, () => {
+		// net lib handles dns for us :P
+		const netClient = net.createConnection({ host: request.hostname, port: 80 }, () => {
 			netClient.write(request.raw);
 		});
 
