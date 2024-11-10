@@ -2,7 +2,7 @@
 
 This is my http client written from scratch TCP/TLS for fun :D
 
-- Http 1.1 version only supported
+- Tls 1.3
 - Simple
 - Typescript
 
