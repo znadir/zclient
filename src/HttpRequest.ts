@@ -8,14 +8,22 @@ class HttpRequest {
 	private hostname;
 	private pathname;
 	private headers;
+	private payload;
 
-	constructor(zClient: typeof ZClient, method: typeof Method, url: string, headers: object) {
+	constructor(
+		zClient: typeof ZClient,
+		method: typeof Method,
+		url: string,
+		headers: object,
+		payload?: string
+	) {
 		this.zClient = zClient;
 		this.method = method;
 		this.url = new URL(url);
 		this.hostname = this.url.hostname;
 		this.pathname = this.url.pathname;
 		this.headers = headers;
+		this.payload = payload;
 	}
 
 	private formatHeaders(headers: object) {
@@ -24,15 +32,20 @@ class HttpRequest {
 			.join("");
 	}
 
-	get raw() {
+	get raw(): string {
 		const formattedHeaders = this.formatHeaders(this.headers);
 
-		return (
+		let content =
 			`${this.method} ${this.pathname} HTTP/${this.zClient.httpVersion}\r\n` +
 			`Host: ${this.hostname}\r\n` +
 			formattedHeaders +
-			`\r\n`
-		);
+			`\r\n`;
+
+		if (this.payload) {
+			content += this.payload;
+		}
+
+		return content;
 	}
 }
 

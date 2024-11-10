@@ -8,6 +8,10 @@ interface Params {
 	headers: object;
 }
 
+interface PostParams extends Params {
+	json: object;
+}
+
 class ZClient {
 	public userAgentName = "ZClient";
 	public httpVersion = "1.1";
@@ -16,13 +20,18 @@ class ZClient {
 		return ZClient.send(Method.GET, url, params);
 	}
 
-	private getFullHeaders(customHeaders?: object) {
+	static post(url: string, params: PostParams) {
+		return ZClient.send(Method.POST, url, params);
+	}
+
+	private getFullHeaders(customHeaders?: object, payload?: string) {
 		return {
 			"User-Agent": this.userAgentName,
 			Accept: "*/*",
 			"Accept-Language": "en",
 			...customHeaders,
 			Connection: "close",
+			...(payload && { "Content-Length": payload.length }),
 		};
 	}
 
@@ -33,12 +42,19 @@ class ZClient {
 	 * @param params params
 	 * @returns http response in string
 	 */
-	private static async send(method: typeof Method, url: string, params?: Params): Promise<string> {
+	private static async send(
+		method: typeof Method,
+		url: string,
+		params?: Params | PostParams
+	): Promise<string> {
 		const zclient = new ZClient();
 
-		const fullHeaders = zclient.getFullHeaders(params?.headers);
+		const json = params && "json" in params ? params?.json : null;
+		const payload = JSON.stringify(json);
 
-		const request = new HttpRequest(zclient, method, url, fullHeaders);
+		const fullHeaders = zclient.getFullHeaders(params?.headers, payload);
+
+		const request = new HttpRequest(zclient, method, url, fullHeaders, payload);
 		console.log("This raw will be sent: " + request.raw);
 
 		const ip = await getIpFromDomain(request.hostname);
