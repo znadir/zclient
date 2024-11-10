@@ -9,18 +9,21 @@ interface Params {
 }
 
 class ZClient {
-	private userAgentName = "ZClient";
-	private httpVersion = "1.1";
-
-	private initHeaders = {
-		"User-Agent": this.userAgentName,
-		Accept: "*/*",
-		"Accept-Language": "en",
-		Connection: "close",
-	};
+	public userAgentName = "ZClient";
+	public httpVersion = "1.1";
 
 	static get(url: string, params: Params) {
 		return ZClient.send(Method.GET, url, params);
+	}
+
+	private getFullHeaders(customHeaders?: object) {
+		return {
+			"User-Agent": this.userAgentName,
+			Accept: "*/*",
+			"Accept-Language": "en",
+			...customHeaders,
+			Connection: "close",
+		};
 	}
 
 	/**
@@ -32,10 +35,10 @@ class ZClient {
 	 */
 	private static async send(method: typeof Method, url: string, params?: Params): Promise<string> {
 		const zclient = new ZClient();
-		const request = new HttpRequest(zclient, method, url, {
-			...zclient.initHeaders,
-			...params?.headers,
-		});
+
+		const fullHeaders = zclient.getFullHeaders(params?.headers);
+
+		const request = new HttpRequest(zclient, method, url, fullHeaders);
 		console.log("This raw will be sent: " + request.raw);
 
 		const ip = await getIpFromDomain(request.hostname);

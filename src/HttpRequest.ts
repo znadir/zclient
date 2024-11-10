@@ -18,15 +18,19 @@ class HttpRequest {
 		this.headers = headers;
 	}
 
-	get raw() {
-		const customHeaders = Object.entries(this.headers)
+	private formatHeaders(headers: object) {
+		return Object.entries(headers)
 			.map(([key, val]) => `${key}: ${val}\r\n`)
 			.join("");
+	}
+
+	get raw() {
+		const formattedHeaders = this.formatHeaders(this.headers);
 
 		return (
 			`${this.method} ${this.pathname} HTTP/${this.zClient.httpVersion}\r\n` +
 			`Host: ${this.hostname}\r\n` +
-			customHeaders +
+			formattedHeaders +
 			`\r\n`
 		);
 	}
