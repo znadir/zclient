@@ -3,6 +3,7 @@ const Method = require("./Method");
 
 class HttpRequest {
 	private zClient;
+	private isSecure; // https
 	private method;
 	private url;
 	private hostname;
@@ -12,12 +13,14 @@ class HttpRequest {
 
 	constructor(
 		zClient: typeof ZClient,
+		isSecure: boolean,
 		method: typeof Method,
 		url: string,
 		headers: object,
 		payload?: string
 	) {
 		this.zClient = zClient;
+		this.isSecure = isSecure;
 		this.method = method;
 		this.url = new URL(url);
 		this.hostname = this.url.hostname;

@@ -35,6 +35,24 @@ class ZClient {
 		};
 	}
 
+	private static buildRequest(
+		method: typeof Method,
+		url: string,
+		params?: Params | PostParams
+	): typeof HttpRequest {
+		const zclient = new ZClient();
+
+		const json = params && "json" in params ? params?.json : null;
+		const payload = JSON.stringify(json);
+
+		const fullHeaders = zclient.getFullHeaders(params?.headers, payload);
+
+		const request = new HttpRequest(zclient, false, method, url, fullHeaders, payload);
+		console.log("This raw will be sent: " + request.raw);
+
+		return request;
+	}
+
 	/**
 	 * Send a http request
 	 * @param method http method enum
@@ -47,15 +65,7 @@ class ZClient {
 		url: string,
 		params?: Params | PostParams
 	): Promise<string> {
-		const zclient = new ZClient();
-
-		const json = params && "json" in params ? params?.json : null;
-		const payload = JSON.stringify(json);
-
-		const fullHeaders = zclient.getFullHeaders(params?.headers, payload);
-
-		const request = new HttpRequest(zclient, method, url, fullHeaders, payload);
-		console.log("This raw will be sent: " + request.raw);
+		const request = ZClient.buildRequest(method, url, params);
 
 		// net lib handles dns for us :P
 		const netClient = net.createConnection({ host: request.hostname, port: 80 }, () => {
