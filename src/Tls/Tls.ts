@@ -4,3 +4,5 @@ class Tls {
 
 	constructor() {}
 }
+
+module.exports = Tls;
