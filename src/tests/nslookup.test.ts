@@ -1,4 +1,4 @@
-const { getIpFromDoamin, getDomainFromUrl } = require("../utils");
+const { getIpFromDomain, getDomainFromUrl } = require("../utils");
 
 test("get domain from url", () => {
 	const url = "https://www.google.com/lol";
@@ -8,6 +8,6 @@ test("get domain from url", () => {
 });
 
 test("get ip by domain", async () => {
-	const ip = await getIpFromDoamin("tcpbin.com");
+	const ip = await getIpFromDomain("tcpbin.com");
 	expect(ip).toBe("45.79.112.203");
 });
