@@ -8,7 +8,7 @@ This is my http client written from scratch TLS for fun :D
 
 Example:
 
-```
+```ts
 const res = await ZClient.get("http://echo.free.beeceptor.com/");
 console.log(res.text);
 ```
