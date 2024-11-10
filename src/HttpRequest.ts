@@ -3,7 +3,7 @@ const Method = require("./Method");
 
 class HttpRequest {
 	private zClient;
-	private isSecure; // https
+	private isSecure; // if tls is used
 	private method;
 	private url;
 	private hostname;
