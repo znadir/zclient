@@ -1,17 +1,11 @@
-enum Method {
-	get,
-}
-
-interface Params {
-	method: Method;
-	headers: object;
-}
+const net = require("node:net");
+const { getIpFromDomain } = require("./utils");
+const { Buffer } = require("node:buffer");
+const Request = require("./Request");
 
 class Client {
 	private userAgentName = "Z Client";
 	private httpVersion = "1.1";
-
-	constructor() {}
 
 	private initHeaders = {
 		"User-Agent": this.userAgentName,
@@ -20,9 +14,31 @@ class Client {
 		Connection: "close",
 	};
 
-	private async method(url: string, params: Params) {}
+	async send(request: typeof Request): Promise<string> {
+		const ip = await getIpFromDomain(request.hostname);
 
-	static async get(url: string) {}
+		const con = {
+			host: ip,
+			port: 80,
+		};
+
+		const client = net.createConnection(con, () => {
+			client.write(request.raw);
+		});
+
+		return new Promise((resolve, reject) => {
+			client.on("data", (data: typeof Buffer | string) => {
+				const httpRes = data.toString();
+				client.end();
+
+				resolve(httpRes);
+			});
+
+			client.on("error", (error: typeof Error) => {
+				reject(error);
+			});
+		});
+	}
 
 	public toString(): string {
 		return `ZClient. HTTP ${this.httpVersion}`;

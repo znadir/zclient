@@ -8,9 +8,8 @@ async function main() {
 	const headers = {
 		xcrsf: "sdade",
 	};
-
-	const request = new Request(zclient, "https://echo.free.beeceptor.com/", headers);
-	const result = await request.send();
+	const request = new Request(zclient, "GET", "https://echo.free.beeceptor.com/", headers);
+	const result = await zclient.send(request);
 
 	console.log("RESULT: " + result);
 }
