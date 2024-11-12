@@ -1,6 +1,6 @@
 import net from "node:net";
 import { Buffer } from "node:buffer";
-import Method from "./Method";
+import MethodType from "./MethodType";
 import HttpRequest from "./HttpRequest";
 
 interface Params {
@@ -16,11 +16,11 @@ class ZClient {
 	public httpVersion = "1.1";
 
 	static get(url: string, params: Params) {
-		return ZClient.send(Method.GET, url, params);
+		return ZClient.send(MethodType.GET, url, params);
 	}
 
 	static post(url: string, params: PostParams) {
-		return ZClient.send(Method.POST, url, params);
+		return ZClient.send(MethodType.POST, url, params);
 	}
 
 	private getFullHeaders(customHeaders?: object, payload?: string) {
@@ -35,7 +35,7 @@ class ZClient {
 	}
 
 	private static buildRequest(
-		method: Method,
+		method: MethodType,
 		url: string,
 		params?: Params | PostParams
 	): HttpRequest {
@@ -60,7 +60,7 @@ class ZClient {
 	 * @returns http response in string
 	 */
 	private static async send(
-		method: Method,
+		method: MethodType,
 		url: string,
 		params?: Params | PostParams
 	): Promise<string> {

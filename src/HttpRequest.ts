@@ -1,5 +1,5 @@
 import ZClient from "./ZClient";
-import Method from "./Method";
+import MethodType from "./MethodType";
 
 class HttpRequest {
 	private zClient;
@@ -14,7 +14,7 @@ class HttpRequest {
 	constructor(
 		zClient: ZClient,
 		isSecure: boolean,
-		method: Method,
+		method: MethodType,
 		url: string,
 		headers: object,
 		payload?: string

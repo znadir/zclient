@@ -1,4 +1,4 @@
-enum Method {
+enum MethodType {
 	GET = "GET",
 	POST = "POST",
 	PUT = "PUT",
@@ -6,4 +6,4 @@ enum Method {
 	PATCH = "PATCH",
 }
 
-export default Method;
+export default MethodType;
