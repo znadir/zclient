@@ -1,3 +1,3 @@
-const RecordLayer = require("./RecordLayer");
+import RecordLayer from "./RecordLayer";
 
 class HandshakeLayer extends RecordLayer {}

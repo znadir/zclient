@@ -1,5 +1,5 @@
-const ContentType = require("../enum/ContentType");
-const Layer = require("./Layer");
+import ContentType from "../enum/ContentType";
+import Layer from "./Layer";
 
 class RecordLayer extends Layer {
 	private contentType; // high-level protocol used to process the fragment
@@ -7,11 +7,7 @@ class RecordLayer extends Layer {
 	private length; // length in bytes of TLSPlaintext.fragment. Max 2^14 bytes
 	private fragment; // data being transmitted
 
-	constructor(
-		contentType: typeof ContentType,
-		legacyRecordVersion: Uint8Array,
-		fragment: Uint8Array
-	) {
+	constructor(contentType: ContentType, legacyRecordVersion: Uint8Array, fragment: Uint8Array) {
 		super();
 
 		this.contentType = contentType;
@@ -26,4 +22,4 @@ class RecordLayer extends Layer {
 	}
 }
 
-module.exports = RecordLayer;
+export default RecordLayer;

@@ -6,4 +6,4 @@ class Tls {
 	constructor() {}
 }
 
-module.exports = Tls;
+export default Tls;

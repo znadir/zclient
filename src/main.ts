@@ -1,5 +1,4 @@
-const { getIpFromDomain } = require("./utils");
-const ZClient = require("./ZClient");
+import ZClient from "./ZClient";
 
 async function main() {
 	const res = await ZClient.post("https://echo.free.beeceptor.com/", {

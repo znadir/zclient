@@ -6,4 +6,4 @@ enum Method {
 	PATCH = "PATCH",
 }
 
-module.exports = Method;
+export default Method;

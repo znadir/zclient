@@ -1,8 +1,7 @@
-const net = require("node:net");
-const { getIpFromDomain } = require("./utils");
-const { Buffer } = require("node:buffer");
-const Method = require("./Method");
-const HttpRequest = require("./HttpRequest");
+import net from "node:net";
+import { Buffer } from "node:buffer";
+import Method from "./Method";
+import HttpRequest from "./HttpRequest";
 
 interface Params {
 	headers: object;
@@ -36,10 +35,10 @@ class ZClient {
 	}
 
 	private static buildRequest(
-		method: typeof Method,
+		method: Method,
 		url: string,
 		params?: Params | PostParams
-	): typeof HttpRequest {
+	): HttpRequest {
 		const zclient = new ZClient();
 
 		const json = params && "json" in params ? params?.json : null;
@@ -61,7 +60,7 @@ class ZClient {
 	 * @returns http response in string
 	 */
 	private static async send(
-		method: typeof Method,
+		method: Method,
 		url: string,
 		params?: Params | PostParams
 	): Promise<string> {
@@ -73,14 +72,14 @@ class ZClient {
 		});
 
 		return new Promise((resolve, reject) => {
-			netClient.on("data", (data: typeof Buffer | string) => {
+			netClient.on("data", (data: Buffer | string) => {
 				const httpRes = data.toString();
 				netClient.end();
 
 				resolve(httpRes);
 			});
 
-			netClient.on("error", (error: typeof Error) => {
+			netClient.on("error", (error: Error) => {
 				reject(error);
 			});
 		});
@@ -91,4 +90,4 @@ class ZClient {
 	}
 }
 
-module.exports = ZClient;
+export default ZClient;

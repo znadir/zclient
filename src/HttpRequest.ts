@@ -1,20 +1,20 @@
-const ZClient = require("./ZClient");
-const Method = require("./Method");
+import ZClient from "./ZClient";
+import Method from "./Method";
 
 class HttpRequest {
 	private zClient;
-	private isSecure; // if tls is used
-	private method;
-	private url;
-	private hostname;
-	private pathname;
-	private headers;
-	private payload;
+	public isSecure; // if tls is used
+	public method;
+	public url;
+	public hostname;
+	public pathname;
+	public headers;
+	public payload;
 
 	constructor(
-		zClient: typeof ZClient,
+		zClient: ZClient,
 		isSecure: boolean,
-		method: typeof Method,
+		method: Method,
 		url: string,
 		headers: object,
 		payload?: string
@@ -52,4 +52,4 @@ class HttpRequest {
 	}
 }
 
-module.exports = HttpRequest;
+export default HttpRequest;

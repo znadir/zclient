@@ -6,4 +6,4 @@ enum ContentType {
 	APPLICATION_DATA = 23,
 }
 
-module.exports = ContentType;
+export default ContentType;

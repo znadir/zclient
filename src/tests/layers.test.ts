@@ -1,6 +1,6 @@
-const Tls = require("../Tls/Tls");
-const RecordLayer = require("../Tls/layers/RecordLayer");
-const ContentType = require("../Tls/enum/ContentType");
+import Tls from "../Tls/Tls";
+import RecordLayer from "../Tls/layers/RecordLayer";
+import ContentType from "../Tls/enum/ContentType";
 
 test("test record layer serialization", () => {
 	const randomData = new Uint8Array([1, 2, 3, 4, 5, 6]);
