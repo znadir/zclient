@@ -1,6 +1,6 @@
 # ZClient
 
-This is my http client written from scratch TCP/TLS for fun :D
+This is my http/tls client written from scratch with TCP for fun :D
 
 - Tls 1.3
 - Simple
