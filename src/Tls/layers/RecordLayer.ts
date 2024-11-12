@@ -1,4 +1,4 @@
-const ContentType = require("./ContentType");
+const ContentType = require("../enum/ContentType");
 const Layer = require("./Layer");
 
 class RecordLayer extends Layer {
